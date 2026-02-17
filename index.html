@@ -1,104 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Learning Dashboard</title>
-  <style>
-    body {
-      font-family: Arial;
-      background-color: #f2f2f2;
-      text-align: center;
-    }
-    .menu {
-      background: #333;
-      padding: 10px;
-    }
-    .menu button {
-      margin: 5px;
-      padding: 10px;
-      color: white;
-      background: #555;
-      border: none;
-    }
-    .section {
-      display: none;
-      margin-top: 20px;
-    }
-    input {
-      padding: 8px;
-      margin: 5px;
-    }
-  </style>
+<title>Learning Dashboard</title>
+<style>
+body {
+  font-family: Arial;
+  background-color: #f2f2f2;
+  text-align: center;
+}
+.menu {
+  background: #333;
+  padding: 10px;
+}
+.menu button {
+  margin: 5px;
+  padding: 10px;
+  color: white;
+  background: #555;
+  border: none;
+}
+.section {
+  display: none;
+  margin-top: 20px;
+}
+input {
+  padding: 8px;
+  margin: 5px;
+}
+</style>
 </head>
-<body>
 
-<h2>Learning App Dashboard</h2>
-
-<div class="menu">
-  <button onclick="showSection('photos')">Photos</button>
-  <button onclick="showSection('vocab')">Vocabulary</button>
-  <button onclick="showSection('search')">Search</button>
-  <button onclick="showSection('timetable')">Timetable</button>
-  <button onclick="changeColor()">Theme</button>
-</div>
-
-<div id="photos" class="section">
-  <h3>Save Photo</h3>
-  <input type="file" id="photoInput">
-  <button onclick="savePhoto()">Save</button>
-  <div id="photoList"></div>
-</div>
-
-<div id="vocab" class="section">
-  <h3>Add Vocabulary</h3>
-  <input type="text" id="word" placeholder="Word">
-  <button onclick="addWord()">Add</button>
-  <div id="wordList"></div>
-</div>
-
-<div id="search" class="section">
-  <h3>Search</h3>
-  <input type="text" onkeyup="searchWord(this.value)" placeholder="Type letter...">
-  <div id="searchResult"></div>
-</div>
-
-<div id="timetable" class="section">
-  <h3>Timetable</h3>
-  <table border="1" align="center">
-    <tr><th>Day</th><th>Subject</th></tr>
-    <tr><td>Monday</td><td>English</td></tr>
-    <tr><td>Tuesday</td><td>Math</td></tr>
-  </table>
-</div><!DOCTYPE html>
-<html>
-<head>
-  <title>Learning Dashboard</title>
-  <style>
-    body {
-      font-family: Arial;
-      background-color: #f2f2f2;
-      text-align: center;
-    }
-    .menu {
-      background: #333;
-      padding: 10px;
-    }
-    .menu button {
-      margin: 5px;
-      padding: 10px;
-      color: white;
-      background: #555;
-      border: none;
-    }
-    .section {
-      display: none;
-      margin-top: 20px;
-    }
-    input {
-      padding: 8px;
-      margin: 5px;
-    }
-  </style>
-</head>
 <body>
 
 <h2>Learning App Dashboard</h2>
@@ -142,78 +73,39 @@
 
 <script>
 function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-  document.getElementById(id).style.display = 'block';
+  let sections = document.querySelectorAll('.section');
+  sections.forEach(sec => sec.style.display = "none");
+  document.getElementById(id).style.display = "block";
 }
 
 function changeColor() {
-  document.body.style.backgroundColor =
-    document.body.style.backgroundColor === 'lightblue' ? '#f2f2f2' : 'lightblue';
-}
-
-function savePhoto() {
-  const input = document.getElementById("photoInput");
-  const reader = new FileReader();
-  reader.onload = function() {
-    const img = document.createElement("img");
-    img.src = reader.result;
-    img.width = 100;
-    document.getElementById("photoList").appendChild(img);
-  };
-  reader.readAsDataURL(input.files[0]);
+  let color = prompt("Enter background color:");
+  document.body.style.backgroundColor = color;
 }
 
 let words = [];
 
 function addWord() {
-  const word = document.getElementById("word").value;
+  let word = document.getElementById("word").value;
   words.push(word);
-  document.getElementById("wordList").innerHTML = words.join("<br>");
+  document.getElementById("wordList").innerHTML += "<p>" + word + "</p>";
 }
 
 function searchWord(letter) {
-  const result = words.filter(w => w.startsWith(letter));
+  let result = words.filter(w => w.startsWith(letter));
   document.getElementById("searchResult").innerHTML = result.join("<br>");
-}
-</script>
-
-</body>
-</html>
-
-<script>
-function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-  document.getElementById(id).style.display = 'block';
-}
-
-function changeColor() {
-  document.body.style.backgroundColor =
-    document.body.style.backgroundColor === 'lightblue' ? '#f2f2f2' : 'lightblue';
 }
 
 function savePhoto() {
-  const input = document.getElementById("photoInput");
-  const reader = new FileReader();
+  let input = document.getElementById("photoInput");
+  let reader = new FileReader();
   reader.onload = function() {
-    const img = document.createElement("img");
+    let img = document.createElement("img");
     img.src = reader.result;
     img.width = 100;
     document.getElementById("photoList").appendChild(img);
-  };
+  }
   reader.readAsDataURL(input.files[0]);
-}
-
-let words = [];
-
-function addWord() {
-  const word = document.getElementById("word").value;
-  words.push(word);
-  document.getElementById("wordList").innerHTML = words.join("<br>");
-}
-
-function searchWord(letter) {
-  const result = words.filter(w => w.startsWith(letter));
-  document.getElementById("searchResult").innerHTML = result.join("<br>");
 }
 </script>
 
