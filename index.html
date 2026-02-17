@@ -1,51 +1,221 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Learning App</title>
+  <title>Learning Dashboard</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+    .menu {
+      background: #333;
+      padding: 10px;
+    }
+    .menu button {
+      margin: 5px;
+      padding: 10px;
+      color: white;
+      background: #555;
+      border: none;
+    }
+    .section {
+      display: none;
+      margin-top: 20px;
+    }
+    input {
+      padding: 8px;
+      margin: 5px;
+    }
+  </style>
 </head>
 <body>
-  <h2>Firebase Login & Register</h2>
 
-  <input type="email" id="email" placeholder="Email"><br><br>
-  <input type="password" id="password" placeholder="Password"><br><br>
+<h2>Learning App Dashboard</h2>
 
-  <button onclick="register()">Register</button>
-  <button onclick="login()">Login</button>
+<div class="menu">
+  <button onclick="showSection('photos')">Photos</button>
+  <button onclick="showSection('vocab')">Vocabulary</button>
+  <button onclick="showSection('search')">Search</button>
+  <button onclick="showSection('timetable')">Timetable</button>
+  <button onclick="changeColor()">Theme</button>
+</div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-    from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+<div id="photos" class="section">
+  <h3>Save Photo</h3>
+  <input type="file" id="photoInput">
+  <button onclick="savePhoto()">Save</button>
+  <div id="photoList"></div>
+</div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDhVmcHXKy_Uley6YsHtBMM7yTTafT8nRs",
-      authDomain: "learning-app-a9957.firebaseapp.com",
-      projectId: "learning-app-a9957",
-      storageBucket: "learning-app-a9957.firebasestorage.app",
-      messagingSenderId: "13163554745",
-      appId: "1:13163554745:web:307a6c618dbedce93a7868"
-    };
+<div id="vocab" class="section">
+  <h3>Add Vocabulary</h3>
+  <input type="text" id="word" placeholder="Word">
+  <button onclick="addWord()">Add</button>
+  <div id="wordList"></div>
+</div>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+<div id="search" class="section">
+  <h3>Search</h3>
+  <input type="text" onkeyup="searchWord(this.value)" placeholder="Type letter...">
+  <div id="searchResult"></div>
+</div>
 
-    window.register = function () {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => alert("Registered Successfully"))
-        .catch(error => alert(error.message));
+<div id="timetable" class="section">
+  <h3>Timetable</h3>
+  <table border="1" align="center">
+    <tr><th>Day</th><th>Subject</th></tr>
+    <tr><td>Monday</td><td>English</td></tr>
+    <tr><td>Tuesday</td><td>Math</td></tr>
+  </table>
+</div><!DOCTYPE html>
+<html>
+<head>
+  <title>Learning Dashboard</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f2f2f2;
+      text-align: center;
     }
-
-    window.login = function () {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => alert("Login Successful"))
-        .catch(error => alert(error.message));
+    .menu {
+      background: #333;
+      padding: 10px;
     }
-  </script>
+    .menu button {
+      margin: 5px;
+      padding: 10px;
+      color: white;
+      background: #555;
+      border: none;
+    }
+    .section {
+      display: none;
+      margin-top: 20px;
+    }
+    input {
+      padding: 8px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Learning App Dashboard</h2>
+
+<div class="menu">
+  <button onclick="showSection('photos')">Photos</button>
+  <button onclick="showSection('vocab')">Vocabulary</button>
+  <button onclick="showSection('search')">Search</button>
+  <button onclick="showSection('timetable')">Timetable</button>
+  <button onclick="changeColor()">Theme</button>
+</div>
+
+<div id="photos" class="section">
+  <h3>Save Photo</h3>
+  <input type="file" id="photoInput">
+  <button onclick="savePhoto()">Save</button>
+  <div id="photoList"></div>
+</div>
+
+<div id="vocab" class="section">
+  <h3>Add Vocabulary</h3>
+  <input type="text" id="word" placeholder="Word">
+  <button onclick="addWord()">Add</button>
+  <div id="wordList"></div>
+</div>
+
+<div id="search" class="section">
+  <h3>Search</h3>
+  <input type="text" onkeyup="searchWord(this.value)" placeholder="Type letter...">
+  <div id="searchResult"></div>
+</div>
+
+<div id="timetable" class="section">
+  <h3>Timetable</h3>
+  <table border="1" align="center">
+    <tr><th>Day</th><th>Subject</th></tr>
+    <tr><td>Monday</td><td>English</td></tr>
+    <tr><td>Tuesday</td><td>Math</td></tr>
+  </table>
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+
+function changeColor() {
+  document.body.style.backgroundColor =
+    document.body.style.backgroundColor === 'lightblue' ? '#f2f2f2' : 'lightblue';
+}
+
+function savePhoto() {
+  const input = document.getElementById("photoInput");
+  const reader = new FileReader();
+  reader.onload = function() {
+    const img = document.createElement("img");
+    img.src = reader.result;
+    img.width = 100;
+    document.getElementById("photoList").appendChild(img);
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+let words = [];
+
+function addWord() {
+  const word = document.getElementById("word").value;
+  words.push(word);
+  document.getElementById("wordList").innerHTML = words.join("<br>");
+}
+
+function searchWord(letter) {
+  const result = words.filter(w => w.startsWith(letter));
+  document.getElementById("searchResult").innerHTML = result.join("<br>");
+}
+</script>
+
 </body>
-  </html>
+</html>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+
+function changeColor() {
+  document.body.style.backgroundColor =
+    document.body.style.backgroundColor === 'lightblue' ? '#f2f2f2' : 'lightblue';
+}
+
+function savePhoto() {
+  const input = document.getElementById("photoInput");
+  const reader = new FileReader();
+  reader.onload = function() {
+    const img = document.createElement("img");
+    img.src = reader.result;
+    img.width = 100;
+    document.getElementById("photoList").appendChild(img);
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+let words = [];
+
+function addWord() {
+  const word = document.getElementById("word").value;
+  words.push(word);
+  document.getElementById("wordList").innerHTML = words.join("<br>");
+}
+
+function searchWord(letter) {
+  const result = words.filter(w => w.startsWith(letter));
+  document.getElementById("searchResult").innerHTML = result.join("<br>");
+}
+</script>
+
+</body>
+</html>
